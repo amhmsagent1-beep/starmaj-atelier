@@ -1,0 +1,1568 @@
+{
+  "id": "630bb0c5-345c-47f8-b267-57273e4b43a3",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.action_pricing": {
+      "name": "action_pricing",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "code_action": {
+          "name": "code_action",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nom_action": {
+          "name": "nom_action",
+          "type": "varchar(150)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "categorie": {
+          "name": "categorie",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'general'"
+        },
+        "prix_sc": {
+          "name": "prix_sc",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'10.00'"
+        },
+        "prix_cfa": {
+          "name": "prix_cfa",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'500.00'"
+        },
+        "actif": {
+          "name": "actif",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": true
+        },
+        "mis_a_jour_a": {
+          "name": "mis_a_jour_a",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "action_pricing_code_action_unique": {
+          "name": "action_pricing_code_action_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "code_action"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.admin_settings": {
+      "name": "admin_settings",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "cle_configuration": {
+          "name": "cle_configuration",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "valeur_configuration": {
+          "name": "valeur_configuration",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "modifie_par": {
+          "name": "modifie_par",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mis_a_jour_a": {
+          "name": "mis_a_jour_a",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "admin_settings_modifie_par_users_id_fk": {
+          "name": "admin_settings_modifie_par_users_id_fk",
+          "tableFrom": "admin_settings",
+          "tableTo": "users",
+          "columnsFrom": [
+            "modifie_par"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "admin_settings_cle_configuration_unique": {
+          "name": "admin_settings_cle_configuration_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "cle_configuration"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.captive_templates": {
+      "name": "captive_templates",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "titre": {
+          "name": "titre",
+          "type": "varchar(150)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "theme_couleur": {
+          "name": "theme_couleur",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'amber_dark'"
+        },
+        "nom_etablissement": {
+          "name": "nom_etablissement",
+          "type": "varchar(150)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'STARMAJ HOTSPOT ZONE'"
+        },
+        "message_bienvenue": {
+          "name": "message_bienvenue",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Bienvenue sur notre réseau WiFi Haute Vitesse ! Connectez-vous avec votre coupon.'"
+        },
+        "contact_assistance": {
+          "name": "contact_assistance",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'+227 90 00 11 22'"
+        },
+        "logo_text": {
+          "name": "logo_text",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'STARMAJ WIFI'"
+        },
+        "tarifs_affichage": {
+          "name": "tarifs_affichage",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'1H = 100 CFA (2 SC) | 3H = 250 CFA (5 SC) | 24H = 500 CFA (10 SC)'"
+        },
+        "afficher_popup_statut": {
+          "name": "afficher_popup_statut",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": true
+        },
+        "html_complet": {
+          "name": "html_complet",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "date_creation": {
+          "name": "date_creation",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "captive_templates_user_id_users_id_fk": {
+          "name": "captive_templates_user_id_users_id_fk",
+          "tableFrom": "captive_templates",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.payment_gateways": {
+      "name": "payment_gateways",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "nom_methode": {
+          "name": "nom_methode",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "numero_telephone_defaut": {
+          "name": "numero_telephone_defaut",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nom_beneficiaire": {
+          "name": "nom_beneficiaire",
+          "type": "varchar(150)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "instructions": {
+          "name": "instructions",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "statut": {
+          "name": "statut",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'actif'"
+        },
+        "frais_pourcentage": {
+          "name": "frais_pourcentage",
+          "type": "numeric(5, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'0.00'"
+        },
+        "pays": {
+          "name": "pays",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Niger'"
+        },
+        "logo_icon": {
+          "name": "logo_icon",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'wallet'"
+        },
+        "mis_a_jour_a": {
+          "name": "mis_a_jour_a",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.roaming_zones": {
+      "name": "roaming_zones",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nom_zone": {
+          "name": "nom_zone",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "date_creation": {
+          "name": "date_creation",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "roaming_zones_user_id_users_id_fk": {
+          "name": "roaming_zones_user_id_users_id_fk",
+          "tableFrom": "roaming_zones",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.router_heartbeat_logs": {
+      "name": "router_heartbeat_logs",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "router_id": {
+          "name": "router_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "token": {
+          "name": "token",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ip_client": {
+          "name": "ip_client",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cpu_load": {
+          "name": "cpu_load",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "uptime": {
+          "name": "uptime",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "action_prise": {
+          "name": "action_prise",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "commandes_repondues": {
+          "name": "commandes_repondues",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "statut_alerte": {
+          "name": "statut_alerte",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'normal'"
+        },
+        "date_log": {
+          "name": "date_log",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "router_heartbeat_logs_router_id_routers_id_fk": {
+          "name": "router_heartbeat_logs_router_id_routers_id_fk",
+          "tableFrom": "router_heartbeat_logs",
+          "tableTo": "routers",
+          "columnsFrom": [
+            "router_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.routers": {
+      "name": "routers",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "roaming_zone_id": {
+          "name": "roaming_zone_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "captive_template_id": {
+          "name": "captive_template_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nom_routeur": {
+          "name": "nom_routeur",
+          "type": "varchar(150)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "identifiant_unique_token": {
+          "name": "identifiant_unique_token",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "version_routeros": {
+          "name": "version_routeros",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'v7.14'"
+        },
+        "statut_connexion": {
+          "name": "statut_connexion",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'hors_ligne'"
+        },
+        "ip_publique": {
+          "name": "ip_publique",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ip_locale": {
+          "name": "ip_locale",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'192.168.88.1'"
+        },
+        "dns_primaire": {
+          "name": "dns_primaire",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'1.1.1.1'"
+        },
+        "dns_secondaire": {
+          "name": "dns_secondaire",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'8.8.8.8'"
+        },
+        "dns_nom_domaine": {
+          "name": "dns_nom_domaine",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'starmaj.hotspot'"
+        },
+        "hotspot_interface": {
+          "name": "hotspot_interface",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'bridge-hotspot'"
+        },
+        "modele": {
+          "name": "modele",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'MikroTik RouterBOARD'"
+        },
+        "cpu_load": {
+          "name": "cpu_load",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "ram_free_mb": {
+          "name": "ram_free_mb",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 128
+        },
+        "uptime": {
+          "name": "uptime",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'0d 0h 0m'"
+        },
+        "active_hotspot_users": {
+          "name": "active_hotspot_users",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "derniere_synchro": {
+          "name": "derniere_synchro",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "auto_repair_enabled": {
+          "name": "auto_repair_enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": true
+        },
+        "pcc_enabled": {
+          "name": "pcc_enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "pcc_lines_count": {
+          "name": "pcc_lines_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 2
+        },
+        "script_pending": {
+          "name": "script_pending",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "date_creation": {
+          "name": "date_creation",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "routers_user_id_users_id_fk": {
+          "name": "routers_user_id_users_id_fk",
+          "tableFrom": "routers",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "routers_roaming_zone_id_roaming_zones_id_fk": {
+          "name": "routers_roaming_zone_id_roaming_zones_id_fk",
+          "tableFrom": "routers",
+          "tableTo": "roaming_zones",
+          "columnsFrom": [
+            "roaming_zone_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "routers_captive_template_id_captive_templates_id_fk": {
+          "name": "routers_captive_template_id_captive_templates_id_fk",
+          "tableFrom": "routers",
+          "tableTo": "captive_templates",
+          "columnsFrom": [
+            "captive_template_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "routers_identifiant_unique_token_unique": {
+          "name": "routers_identifiant_unique_token_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "identifiant_unique_token"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.subscriptions": {
+      "name": "subscriptions",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "plan_code": {
+          "name": "plan_code",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "plan_nom": {
+          "name": "plan_nom",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Plan'"
+        },
+        "montant_sc": {
+          "name": "montant_sc",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'0.00'"
+        },
+        "montant_cfa": {
+          "name": "montant_cfa",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'0.00'"
+        },
+        "statut": {
+          "name": "statut",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'active'"
+        },
+        "max_routeurs": {
+          "name": "max_routeurs",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 15
+        },
+        "max_antennes": {
+          "name": "max_antennes",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'10'"
+        },
+        "auto_ia_credits": {
+          "name": "auto_ia_credits",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 1
+        },
+        "roaming_routeurs": {
+          "name": "roaming_routeurs",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 2
+        },
+        "date_debut": {
+          "name": "date_debut",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "date_fin": {
+          "name": "date_fin",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "date_creation": {
+          "name": "date_creation",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "subscriptions_user_id_users_id_fk": {
+          "name": "subscriptions_user_id_users_id_fk",
+          "tableFrom": "subscriptions",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.third_party_devices": {
+      "name": "third_party_devices",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "router_id": {
+          "name": "router_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "marque": {
+          "name": "marque",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nom_appareil": {
+          "name": "nom_appareil",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "adresse_ip": {
+          "name": "adresse_ip",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "adresse_mac": {
+          "name": "adresse_mac",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "vlan_id": {
+          "name": "vlan_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 10
+        },
+        "statut": {
+          "name": "statut",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'en_ligne'"
+        },
+        "date_creation": {
+          "name": "date_creation",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "third_party_devices_router_id_routers_id_fk": {
+          "name": "third_party_devices_router_id_routers_id_fk",
+          "tableFrom": "third_party_devices",
+          "tableTo": "routers",
+          "columnsFrom": [
+            "router_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "third_party_devices_user_id_users_id_fk": {
+          "name": "third_party_devices_user_id_users_id_fk",
+          "tableFrom": "third_party_devices",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.ticket_batches": {
+      "name": "ticket_batches",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "router_id": {
+          "name": "router_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "profile_id": {
+          "name": "profile_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nom_lot": {
+          "name": "nom_lot",
+          "type": "varchar(150)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quantite": {
+          "name": "quantite",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 50
+        },
+        "template_design": {
+          "name": "template_design",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'mikhmon_thermal'"
+        },
+        "logo_ticket": {
+          "name": "logo_ticket",
+          "type": "varchar(150)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'STARMAJ WIFI'"
+        },
+        "date_creation": {
+          "name": "date_creation",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "ticket_batches_user_id_users_id_fk": {
+          "name": "ticket_batches_user_id_users_id_fk",
+          "tableFrom": "ticket_batches",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "ticket_batches_router_id_routers_id_fk": {
+          "name": "ticket_batches_router_id_routers_id_fk",
+          "tableFrom": "ticket_batches",
+          "tableTo": "routers",
+          "columnsFrom": [
+            "router_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "ticket_batches_profile_id_user_profiles_id_fk": {
+          "name": "ticket_batches_profile_id_user_profiles_id_fk",
+          "tableFrom": "ticket_batches",
+          "tableTo": "user_profiles",
+          "columnsFrom": [
+            "profile_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.transactions": {
+      "name": "transactions",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "montant_sc": {
+          "name": "montant_sc",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "montant_cfa": {
+          "name": "montant_cfa",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "methode_paiement": {
+          "name": "methode_paiement",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "numero_expediteur": {
+          "name": "numero_expediteur",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "capture_ecran_url": {
+          "name": "capture_ecran_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "statut": {
+          "name": "statut",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'en_attente'"
+        },
+        "reference_manuelle": {
+          "name": "reference_manuelle",
+          "type": "varchar(150)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "commentaire_admin": {
+          "name": "commentaire_admin",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "valide_par": {
+          "name": "valide_par",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "date_transaction": {
+          "name": "date_transaction",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "date_traitement": {
+          "name": "date_traitement",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "transactions_user_id_users_id_fk": {
+          "name": "transactions_user_id_users_id_fk",
+          "tableFrom": "transactions",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "transactions_valide_par_users_id_fk": {
+          "name": "transactions_valide_par_users_id_fk",
+          "tableFrom": "transactions",
+          "tableTo": "users",
+          "columnsFrom": [
+            "valide_par"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.user_profiles": {
+      "name": "user_profiles",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nom_profil": {
+          "name": "nom_profil",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "vitesse_upload": {
+          "name": "vitesse_upload",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'1M'"
+        },
+        "vitesse_download": {
+          "name": "vitesse_download",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'2M'"
+        },
+        "limite_temps": {
+          "name": "limite_temps",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'1h'"
+        },
+        "duree_validite": {
+          "name": "duree_validite",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'24h'"
+        },
+        "prix_cfa": {
+          "name": "prix_cfa",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'100.00'"
+        },
+        "prix_sc": {
+          "name": "prix_sc",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'2.00'"
+        },
+        "shared_users": {
+          "name": "shared_users",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 1
+        },
+        "date_creation": {
+          "name": "date_creation",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "user_profiles_user_id_users_id_fk": {
+          "name": "user_profiles_user_id_users_id_fk",
+          "tableFrom": "user_profiles",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "nom": {
+          "name": "nom",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "telephone": {
+          "name": "telephone",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mot_de_passe": {
+          "name": "mot_de_passe",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role": {
+          "name": "role",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'user'"
+        },
+        "pays": {
+          "name": "pays",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Niger'"
+        },
+        "solde_starcoin": {
+          "name": "solde_starcoin",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'0.00'"
+        },
+        "plan_actuel": {
+          "name": "plan_actuel",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'aucun'"
+        },
+        "plan_expire_a": {
+          "name": "plan_expire_a",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "date_creation": {
+          "name": "date_creation",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "users_telephone_unique": {
+          "name": "users_telephone_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "telephone"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.wifi_tickets": {
+      "name": "wifi_tickets",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "batch_id": {
+          "name": "batch_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "router_id": {
+          "name": "router_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code_ticket": {
+          "name": "code_ticket",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "mot_de_passe": {
+          "name": "mot_de_passe",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "profil_vitesse": {
+          "name": "profil_vitesse",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'1M/2M'"
+        },
+        "duree_validite": {
+          "name": "duree_validite",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'1h'"
+        },
+        "prix_cfa": {
+          "name": "prix_cfa",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'100.00'"
+        },
+        "prix_sc": {
+          "name": "prix_sc",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'2.00'"
+        },
+        "est_actif": {
+          "name": "est_actif",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": true
+        },
+        "est_utilise": {
+          "name": "est_utilise",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "session_active_mac": {
+          "name": "session_active_mac",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "derniere_ip": {
+          "name": "derniere_ip",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "date_utilisation": {
+          "name": "date_utilisation",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "date_expiration": {
+          "name": "date_expiration",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "roaming_enabled": {
+          "name": "roaming_enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": true
+        },
+        "logo_ticket": {
+          "name": "logo_ticket",
+          "type": "varchar(150)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'STARMAJ WIFI'"
+        },
+        "date_creation": {
+          "name": "date_creation",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "wifi_tickets_batch_id_ticket_batches_id_fk": {
+          "name": "wifi_tickets_batch_id_ticket_batches_id_fk",
+          "tableFrom": "wifi_tickets",
+          "tableTo": "ticket_batches",
+          "columnsFrom": [
+            "batch_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "wifi_tickets_router_id_routers_id_fk": {
+          "name": "wifi_tickets_router_id_routers_id_fk",
+          "tableFrom": "wifi_tickets",
+          "tableTo": "routers",
+          "columnsFrom": [
+            "router_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "wifi_tickets_user_id_users_id_fk": {
+          "name": "wifi_tickets_user_id_users_id_fk",
+          "tableFrom": "wifi_tickets",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "wifi_tickets_code_ticket_unique": {
+          "name": "wifi_tickets_code_ticket_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "code_ticket"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
